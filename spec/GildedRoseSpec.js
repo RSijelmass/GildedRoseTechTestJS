@@ -13,7 +13,15 @@ describe("Gilded Rose", function() {
 			item = create_item_and_update("bar", 3, 0)
 			expect(item[0].quality).toEqual(0)
 		});
-	});
+		it("subtracts 1 from sellIn when > 0 (unless Sulfuras)", function() {
+			item = create_item_and_update("baz", 2, 0)
+			expect(item[0].sellIn).toEqual(1)
+		});
+	it("subtracts 1 from sellIn when < 0 (unless Sulfuras)", function() {
+			item = create_item_and_update("baz", -2, 0)
+			expect(item[0].sellIn).toEqual(-3)
+		});
+});
 
 	describe("Brie", function() {
 	 	it("quality goes up by one if sellIn ≥ 0", function() {
