@@ -12,15 +12,15 @@ class Shop {
   }
   updateQuality() {
     for (var i = 0; i < this.items.length; i++) {
+			if(this.items[i].name === 'Sulfuras, Hand of Ragnaros') { continue; }
+			// if(this.items[i].name === 'Aged Brie') { continue; }
 			// if item is other or Sulfuras
       if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
 				// checks boundaries quality
         if (this.items[i].quality > 0) {
 					// if item is other
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
 					// updates quality
             this.items[i].quality = this.items[i].quality - 1
-          }
         }
 				// if item is Aged Brie or Backstage
       } else {
@@ -61,10 +61,8 @@ class Shop {
           if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
 						// checks boundaries quality
             if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
 								// update quality
                 this.items[i].quality = this.items[i].quality - 1
-              }
             }
 						// if item is backstage
           } else {

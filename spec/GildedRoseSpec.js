@@ -6,9 +6,8 @@ describe("Gilded Rose", function() {
 
 	describe("general rules", function() {
 		it("doesn't change the name", function() {
-			const gildedRose = new Shop([ new Item("foo", 0, 0) ]);
-			const items = gildedRose.updateQuality();
-			expect(items[0].name).toEqual("foo");
+			item = create_item_and_update("foo", 0, 0);
+			expect(item[0].name).toEqual("foo");
 		});
 		it("never let's quality go under 0", function() {
 			item = create_item_and_update("bar", 3, 0)
