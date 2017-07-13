@@ -19,5 +19,31 @@ describe("Gilded Rose", function() {
 			item = create_item_and_update("Aged Brie", -1, 0)
 			expect(item[0].quality).toEqual(2)
 		});
-});
+	});
+
+	describe("Sulfuras", function() {
+		it("doesn't change in quality", function() {
+			item = create_item_and_update("Sulfuras, Hand of Ragnaros", 0, 40)
+			expect(item[0].quality).toEqual(40)
+		});
+		it("doesn't change in sellIn", function() {
+			item = create_item_and_update("Sulfuras, Hand of Ragnaros", 0, 40)
+			expect(item[0].sellIn).toEqual(0)
+		});
+	});
+
+	describe("Backstage", function() {
+		it("increases quality by 1 if sellIn > 10", function() {
+			item = create_item_and_update("Backstage passes to a TAFKAL80ETC concert", 14, 20)
+			expect(item[0].quality).toEqual(21)
+		});
+		it("increases quality by 2 if sellIn ≤ 10", function() {
+			item = create_item_and_update("Backstage passes to a TAFKAL80ETC concert", 8, 20)
+			expect(item[0].quality).toEqual(22)
+		});
+		it("increases quality by 3 if sellIn ≤ 5", function() {
+			item = create_item_and_update("Backstage passes to a TAFKAL80ETC concert", 4, 20)
+			expect(item[0].quality).toEqual(23)
+		});
+	});
 });
