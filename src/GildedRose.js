@@ -13,19 +13,15 @@ class Shop {
 				return Backstage
 			default:
 				return OtherItem
-
 		}
 	}
 
  	updateQuality() {
     for (var i = 0; i < this.items.length; i++) {
-			var item = this.items[i]
+			var itemClass = this.classFor(this.items[i].name)
 
-			var itemClass = this.classFor(item.name)
-		 	var itemNew = new itemClass(item.name, item.sellIn, item.quality)
-
-			itemNew.updateQuality();
-			this.items[i] = itemNew;
+		 	this.items[i] = new itemClass(this.items[i].name, this.items[i].sellIn, this.items[i].quality)
+			this.items[i].updateQuality();
 			   
 		}
     return this.items;
