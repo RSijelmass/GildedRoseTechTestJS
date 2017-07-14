@@ -6,6 +6,23 @@ class Item {
   }
 }
 
+class AgedBrie extends Item {
+	handleBrie() {
+      this.sellIn-- 
+				if(this.quality < 50) {
+          this.quality++
+				}
+				
+      	if (this.sellIn < 0) {
+          if (this.quality < 50) {
+            this.quality++
+         	}
+				};
+		return this.quality
+	};
+
+}
+
 class Shop {
   constructor(items=[]){
     this.items = items;
@@ -17,18 +34,6 @@ class Shop {
 
  	handleSulfuras(item) { };
 
-	handleBrie(item) {
-      item.sellIn-- 
-				if(this.checkBoundariesQuality(item)) {
-          item.quality++
-				}
-				
-      	if (item.sellIn < 0) {
-          if (this.checkBoundariesQuality(item)) {
-            item.quality++
-         }
-				};
-	};
 
 	handleBackstage(item) {
 
@@ -52,21 +57,15 @@ class Shop {
 	};
 
 	handleOther(item) {
-						item.sellIn-- 
-				// checks boundaries quality
+		item.sellIn-- 
         if (item.quality > 0) {
-					// updates quality
             item.quality = item.quality - 1
         }
-			// if sellIn < 0
       if (item.sellIn < 0) {
-						// checks boundaries quality
             if (item.quality > 0) {
-								// update quality
                 item.quality = item.quality - 1
             }
 				}
-
 	};
 
  	updateQuality() {
@@ -78,7 +77,8 @@ class Shop {
 					this.handleSulfuras(item)
 					continue; 
 				case 'Aged Brie':
-					this.handleBrie(item)
+					this.items[i] = new AgedBrie(item.name, item.sellIn, item.quality)
+					this.items[i].handleBrie();
 					continue;
 				case 'Backstage passes to a TAFKAL80ETC concert':
 					this.handleBackstage(item)
