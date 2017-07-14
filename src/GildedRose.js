@@ -15,89 +15,76 @@ class Shop {
 		if(item.quality < 50 && (item.quality > 0 || item.name === "Aged Brie")) { return true }
 	};
 
- 	handleSulfuras(item) {
-
-	};
+ 	handleSulfuras(item) { };
 
 	handleBrie(item) {
-		// checks boundaries quality 
+      item.sellIn-- 
 				if(this.checkBoundariesQuality(item)) {
-					//updates quality
-          item.quality += 1
+          item.quality++
 				}
 				
       	if (item.sellIn < 0) {
-					// check boundaries quality
           if (this.checkBoundariesQuality(item)) {
-						// update quality
-            item.quality = item.quality + 1
+            item.quality++
          }
 				};
 	};
+
+	handleBackstage(item) {
+
+      item.sellIn-- 
+        if (this.checkBoundariesQuality(item)) {
+          item.quality++
+            if (item.sellIn < 11) {
+              if (item.quality < 50) {
+                item.quality++
+              }
+            }
+            if (item.sellIn < 6) {
+              if (item.quality < 50) {
+                item.quality++ 
+              }
+            }
+        }
+				if(item.sellIn < 0) {
+					item.quality = 0
+				};
+	};
+
+	handleOther(item) {
+						item.sellIn-- 
+				// checks boundaries quality
+        if (item.quality > 0) {
+					// updates quality
+            item.quality = item.quality - 1
+        }
+			// if sellIn < 0
+      if (item.sellIn < 0) {
+						// checks boundaries quality
+            if (item.quality > 0) {
+								// update quality
+                item.quality = item.quality - 1
+            }
+				}
+
+	};
+
  	updateQuality() {
     for (var i = 0; i < this.items.length; i++) {
-			if(this.items[i].name === 'Sulfuras, Hand of Ragnaros') { continue; }
-      this.items[i].sellIn-- 
-			
-			if(this.items[i].name === 'Aged Brie') { 
-				this.handleBrie(this.items[i])
-					continue;
-			};
-		
+			var item = this.items[i]
 
-			// if item is other
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-				// checks boundaries quality
-        if (this.items[i].quality > 0) {
-					// if item is other
-					// updates quality
-            this.items[i].quality = this.items[i].quality - 1
-        }
-				// if item is Aged Brie or Backstage
-      } else {
-				// checks boundaries quality
-        if (this.items[i].quality < 50) {
-					//updates quality
-          this.items[i].quality = this.items[i].quality + 1
-						// if item is Backstage
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-						// if sellin < 11
-            if (this.items[i].sellIn < 11) {
-							// checks boundaries quality
-              if (this.items[i].quality < 50) {
-								// updates quality
-                this.items[i].quality = this.items[i].quality + 1
-              }
-            }
-						// if sellin < 6
-            if (this.items[i].sellIn < 6) {
-							// checks quality boundaries
-              if (this.items[i].quality < 50) {
-								// updates quality
-                this.items[i].quality = this.items[i].quality + 1
-              }
-            }
-          }
-        }
-      }
-			// if item is other, Brie, Backstage 
-				// sellIn - 1
-			// if sellIn < 0
-      if (this.items[i].sellIn < 0) {
-				// if item is other
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-						// checks boundaries quality
-            if (this.items[i].quality > 0) {
-								// update quality
-                this.items[i].quality = this.items[i].quality - 1
-            }
-						// if item is backstage
-          } else {
-						// update quality to 0
-            this.items[i].quality = this.items[i].quality - this.items[i].quality
-          }
-        }
+			switch(item.name) {
+				case 'Sulfuras, Hand of Ragnaros':
+					this.handleSulfuras(item)
+					continue; 
+				case 'Aged Brie':
+					this.handleBrie(item)
+					continue;
+				case 'Backstage passes to a TAFKAL80ETC concert':
+					this.handleBackstage(item)
+					continue;
+				default:
+      		this.handleOther(item)	
       }
     }
 
